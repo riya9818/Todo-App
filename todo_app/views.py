@@ -20,7 +20,7 @@ def todo_delete(request, id):
 def todo_create(request):
     print(request.method, request.POST)
     if request.method == "GET":
-        return render(request, "todo_create.html")
+        return render(request, "bootstrap/todo_create.html")
     else:
         Todo.objects.create(title=request.POST["title"])
         return HttpResponseRedirect("/")

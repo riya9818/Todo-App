@@ -8,7 +8,7 @@ def todo_list(request):
     todos = Todo.objects.all()   #QuerySet/ ORM  => SQL 
     return render (
         request,
-        "todo_list.html",
+        "bootstrap/todo_list.html",
         {"todos":todos},
     )
 
@@ -23,4 +23,18 @@ def todo_create(request):
         return render(request, "todo_create.html")
     else:
         Todo.objects.create(title=request.POST["title"])
+        return HttpResponseRedirect("/")
+
+def todo_update(request,id):
+    if request.method == "GET":
+        todo = Todo.objects.get(id=id)
+        return render(
+            request,
+            "bootstrap/todo_update.html",
+            {"todo" : todo}
+        )
+    else:
+        todo = Todo.objects.get(id=id)
+        todo.title= request.POST["title"]
+        todo.save()
         return HttpResponseRedirect("/")
